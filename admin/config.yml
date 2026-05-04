@@ -1,0 +1,64 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: articles
+public_folder: /articles
+
+collections:
+  - name: articles
+    label: Articles
+    label_singular: Article
+    files:
+      - name: articles_list
+        label: All Articles
+        file: articles.json
+        fields:
+          - label: Articles
+            name: items
+            widget: list
+            label_singular: Article
+            summary: "{{fields.title}} — {{fields.date}}"
+            fields:
+              - label: Title
+                name: title
+                widget: string
+                hint: The full title of your article
+
+              - label: Short Description
+                name: excerpt
+                widget: text
+                hint: One or two sentences describing the article (shown on your portfolio)
+
+              - label: Topic or Category
+                name: topic
+                widget: string
+                hint: "e.g. Personal Essay, Opinion, Writing Tips"
+
+              - label: Published Date
+                name: date
+                widget: datetime
+                format: "MMMM yyyy"
+                date_format: "MMMM yyyy"
+                time_format: false
+                hint: When was this article published?
+
+              - label: File Type
+                name: type
+                widget: select
+                options:
+                  - Article
+                  - Essay
+                  - PDF
+                  - Blog Post
+                  - Feature
+                  - Opinion
+                  - Other
+                default: Article
+
+              - label: Article File
+                name: file
+                widget: file
+                hint: "Upload your article (PDF, Word document, etc.)"
+                media_folder: /articles
+                public_folder: /articles

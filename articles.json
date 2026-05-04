@@ -15,6 +15,14 @@
       "topic": "Sports",
       "date": "October yyyy",
       "file": "/articles/what-is-online-gaming.docx"
+    },
+    {
+      "type": "Article",
+      "title": "The Independent Wife",
+      "excerpt": "The Independent Wife",
+      "topic": "Fiction",
+      "date": "May yyyy",
+      "file": "/articles/musings.docx"
     }
   ]
 }

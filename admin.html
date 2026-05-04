@@ -457,10 +457,10 @@
   }
 
   // ── State ──────────────────────────────────────────────────────────────
-  let rootDir = null;        // FileSystemDirectoryHandle for portfolio root
-  let articlesDir = null;    // FileSystemDirectoryHandle for /articles/
-  let articles = [];         // in-memory list
-  let indexHtmlHandle = null;// FileSystemFileHandle for index.html
+  let rootDir = null;          // FileSystemDirectoryHandle for portfolio root
+  let articlesDir = null;      // FileSystemDirectoryHandle for /articles/
+  let articlesJsonHandle = null;// FileSystemFileHandle for articles.json
+  let articles = [];           // in-memory list
 
   // ── DOM refs ──────────────────────────────────────────────────────────
   const connectScreen  = document.getElementById('connect-screen');
@@ -507,17 +507,20 @@
 
       // Verify this looks like the portfolio folder
       try {
-        indexHtmlHandle = await rootDir.getFileHandle('index.html');
+        await rootDir.getFileHandle('index.html');
       } catch {
-        showToast('This doesn\'t look like the portfolio folder. Please select the folder that contains index.html.', true);
+        showToast("This doesn't look like the portfolio folder. Please select the folder that contains index.html.", true);
         return;
       }
 
       // Get or create articles/ sub-folder
       articlesDir = await rootDir.getDirectoryHandle('articles', { create: true });
 
-      // Read articles from index.html
-      articles = await readArticlesFromHtml();
+      // Get or create articles.json
+      articlesJsonHandle = await rootDir.getFileHandle('articles.json', { create: true });
+
+      // Read articles from articles.json
+      articles = await readArticlesJson();
 
       connectScreen.style.display = 'none';
       adminScreen.style.display = 'block';
@@ -529,33 +532,21 @@
     }
   });
 
-  // ── Read ARTICLES array out of index.html ─────────────────────────────
-  async function readArticlesFromHtml() {
-    const file = await indexHtmlHandle.getFile();
-    const html  = await file.text();
-    const start = html.indexOf('// ARTICLES_START');
-    const end   = html.indexOf('// ARTICLES_END');
-    if (start === -1 || end === -1) return [];
-    const block = html.slice(start, end);
-    // Extract the JSON array from:  const ARTICLES = [...];
-    const match = block.match(/const ARTICLES\s*=\s*(\[[\s\S]*?\]);/);
-    if (!match) return [];
-    try { return JSON.parse(match[1]); } catch { return []; }
+  // ── Read articles.json ────────────────────────────────────────────────
+  async function readArticlesJson() {
+    try {
+      const file = await articlesJsonHandle.getFile();
+      const data = JSON.parse(await file.text());
+      return data.items || [];
+    } catch {
+      return [];
+    }
   }
 
-  // ── Write ARTICLES array back into index.html ─────────────────────────
+  // ── Write articles.json ───────────────────────────────────────────────
   async function saveArticlesToHtml() {
-    const file  = await indexHtmlHandle.getFile();
-    const html  = await file.text();
-    const start = html.indexOf('// ARTICLES_START');
-    const end   = html.indexOf('// ARTICLES_END');
-    if (start === -1 || end === -1) {
-      throw new Error('Could not find article markers in index.html');
-    }
-    const newBlock = `// ARTICLES_START\n  const ARTICLES = ${JSON.stringify(articles, null, 4).replace(/\n/g, '\n  ')};\n  `;
-    const newHtml  = html.slice(0, start) + newBlock + html.slice(end);
-    const writable = await indexHtmlHandle.createWritable();
-    await writable.write(newHtml);
+    const writable = await articlesJsonHandle.createWritable();
+    await writable.write(JSON.stringify({ items: articles }, null, 2));
     await writable.close();
   }
 

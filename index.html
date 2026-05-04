@@ -779,6 +779,15 @@
   });
 
   // Articles — managed via /admin (Decap CMS)
+  // Routes article files through Google Docs Viewer so they open
+  // as readable documents rather than triggering a download prompt.
+  function viewerUrl(filePath) {
+    const absolute = filePath.startsWith('http')
+      ? filePath
+      : `${window.location.origin}/${filePath}`;
+    return `https://docs.google.com/viewer?url=${encodeURIComponent(absolute)}`;
+  }
+
   function renderArticles(items) {
     const grid = document.getElementById('articles-grid');
     if (!items.length) {
@@ -790,9 +799,9 @@
       items.forEach(a => {
         const card = document.createElement('a');
         card.className = 'article-card reveal';
-        card.href = a.file;
+        card.href = viewerUrl(a.file);
         card.target = '_blank';
-        card.rel = 'noopener';
+        card.rel = 'noopener noreferrer';
         card.innerHTML = `
           <div class="article-thumb">
             <span class="article-thumb-letter">${a.title.charAt(0).toUpperCase()}</span>

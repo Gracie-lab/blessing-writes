@@ -1,3 +1,12 @@
 {
-  "items": []
+  "items": [
+    {
+      "type": "Article",
+      "title": "Becoming a better gamer",
+      "excerpt": "Becoming a better gamer",
+      "topic": "Article",
+      "date": "February yyyy",
+      "file": "/articles/becoming-a-better-gamer.docx"
+    }
+  ]
 }

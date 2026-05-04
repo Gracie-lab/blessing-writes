@@ -7,6 +7,14 @@
       "topic": "Article",
       "date": "February yyyy",
       "file": "/articles/becoming-a-better-gamer.docx"
+    },
+    {
+      "type": "Article",
+      "title": "What Is Online Gaming?",
+      "excerpt": "Understand the basics of online gaming.",
+      "topic": "Sports",
+      "date": "October yyyy",
+      "file": "/articles/what-is-online-gaming.docx"
     }
   ]
 }

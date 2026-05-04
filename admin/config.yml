@@ -38,8 +38,8 @@ collections:
               - label: Published Date
                 name: date
                 widget: datetime
-                format: "MMMM yyyy"
-                date_format: "MMMM yyyy"
+                format: "MMMM YYYY"
+                date_format: "MMMM YYYY"
                 time_format: false
                 hint: When was this article published?
 

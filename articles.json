@@ -5,7 +5,7 @@
       "title": "Becoming a better gamer",
       "excerpt": "Becoming a better gamer",
       "topic": "Gaming",
-      "date": "February 2025",
+      "date": "February yyyy",
       "file": "/articles/becoming-a-better-gamer.docx"
     },
     {
@@ -13,7 +13,7 @@
       "title": "What Is Online Gaming?",
       "excerpt": "Understand the basics of online gaming.",
       "topic": "Sports",
-      "date": "October 2025",
+      "date": "October yyyy",
       "file": "/articles/what-is-online-gaming.docx"
     },
     {
@@ -23,6 +23,14 @@
       "topic": "Fiction",
       "date": "May yyyy",
       "file": "/articles/musings.docx"
+    },
+    {
+      "type": "Article",
+      "file": "/articles/is-faure-le-page-a-luxury-brand.docx",
+      "date": "May yyyy",
+      "topic": "Fashion",
+      "title": "Is Faure Le Page a Luxury Brand?",
+      "excerpt": "Is Faure Le Page a Luxury Brand?"
     }
   ]
 }
